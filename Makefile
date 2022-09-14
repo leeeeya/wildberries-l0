@@ -11,3 +11,9 @@ db_up:
 
 db_down:
 	$(BIN_PATH)/goose -dir db_migration postgres "user=liya password=pg12345 dbname=wb sslmode=disable host=localhost port=5333" down
+
+go_subscriber:
+	go run subscriber/subscriber.go
+
+go_publisher:
+	go run publisher/publisher.go

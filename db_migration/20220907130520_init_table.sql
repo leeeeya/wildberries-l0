@@ -1,7 +1,7 @@
 -- +goose Up
 SELECT 'up SQL query';
 CREATE TABLE IF NOT EXISTS data(
-    id text not null,
+    id text not null unique ,
     data json
 );
 

@@ -58,20 +58,37 @@ type Data struct {
 
 type MemCache map[string]Data
 
-var D Data
+var D []Data
 
 var Cache = make(MemCache)
 
-var DataByte []byte
+var DataByte = make([][]byte, 0)
 
-func GetData() {
-	file, err := os.Open("model.json")
+func openFile(fileName string) {
+	var tmpD Data
+
+	file, err := os.Open(fileName)
 	if err != nil {
 		log.Panic()
 	}
 	defer file.Close()
-	DataByte, _ = io.ReadAll(file)
-	if err = json.Unmarshal(DataByte, &D); err != nil {
+
+	tmp, err := io.ReadAll(file)
+	if err != nil {
 		log.Panic(err)
 	}
+	DataByte = append(DataByte, tmp)
+
+	if err = json.Unmarshal(tmp, &tmpD); err != nil {
+		log.Panic(err)
+	}
+	D = append(D, tmpD)
+}
+
+func GetData() {
+	openFile("./models/model.json")
+	openFile("./models/model1.json")
+	openFile("./models/model2.json")
+	openFile("./models/model3.json")
+	openFile("./models/model4.json")
 }
